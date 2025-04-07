@@ -1,27 +1,53 @@
-import { Configuration } from "webpack";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import { BuildOptions } from "settings/webpack/types";
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { Configuration, container } from 'webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-export function buildPlugins(options: BuildOptions): Configuration["plugins"] {
+import { BuildOptions } from 'settings/webpack/types';
+
+import { dependencies } from '../../../package.json';
+
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
+const { ModuleFederationPlugin } = container;
+
+export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
   const { mode, paths, hot, analyzer } = options;
-  const isProd = mode === "production";
-  const isDev = mode === "development";
+  const isProd = mode === 'production';
+  const isDev = mode === 'development';
 
-  const plugins: Configuration["plugins"] = [
+  const plugins: Configuration['plugins'] = [
     new HtmlWebpackPlugin({
       favicon: paths.favicon,
       template: paths.html,
+    }),
+    new ModuleFederationPlugin({
+      name: 'FompCommon',
+      remotes: {
+        GymFrontend: 'GymFrontend@http://localhost:3001/remoteEntry.js',
+      },
+      shared: {
+        react: {
+          singleton: true,
+          requiredVersion: dependencies.react,
+        },
+        'react-dom': {
+          singleton: true,
+          requiredVersion: dependencies['react-dom'],
+        },
+        'react-router-dom': {
+          singleton: true,
+          requiredVersion: dependencies['react-router-dom'],
+        },
+      },
     }),
   ];
 
   if (isProd) {
     plugins.push(
       new MiniCssExtractPlugin({
-        filename: "css/[name].css",
-        chunkFilename: "css/[id].[contenthash].css",
+        filename: 'css/[name].css',
+        chunkFilename: 'css/[id].[contenthash].css',
         ignoreOrder: true,
       })
     );
