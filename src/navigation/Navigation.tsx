@@ -1,13 +1,23 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { Default } from '@/components/default/Default';
+//@ts-ignore
+import GymFrontend from 'GymFrontend/GymFrontend';
 
 const Navigation = () => {
   return (
     <Routes>
-      <Route path="/" element={<Default />} />
-      <Route path="*" element={<Navigate replace to={'/'} />} />
+      <Route path="*" element={<Navigate replace to={'/gym'} />} />
+      <Route path="/" element={<Navigate replace to={'/gym'} />} />
+      <Route
+        path="gym/*"
+        element={
+          <>
+            <h1>HEDER</h1>
+            <GymFrontend />
+          </>
+        }
+      />
     </Routes>
   );
 };
