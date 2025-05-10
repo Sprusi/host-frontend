@@ -1,6 +1,7 @@
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import dotenv from 'dotenv';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { Configuration, container } from 'webpack';
+import webpack, { Configuration, container } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 import { BuildOptions } from 'settings/webpack/types';
@@ -16,11 +17,18 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
   const isProd = mode === 'production';
   const isDev = mode === 'development';
 
+  const env = dotenv.config().parsed || {};
+  const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prev;
+  }, {} as Record<string, string>);
+
   const plugins: Configuration['plugins'] = [
     new HtmlWebpackPlugin({
       favicon: paths.favicon,
       template: paths.html,
     }),
+    new webpack.DefinePlugin(envKeys),
     new ModuleFederationPlugin({
       name: 'FompCommon',
       remotes: {

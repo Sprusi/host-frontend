@@ -1,0 +1,20 @@
+.wrapper {
+  margin-top: 5%;
+}
+
+.card {
+  width: 100%;
+  &Form {
+    &Item {
+      font-weight: bold;
+      :global(.ant-form-item-explain-error) {
+        font-size: 0.8em;
+      }
+    }
+    &Button {
+      width: 100%;
+      height: 2em;
+      margin-top: 10px;
+    }
+  }
+}
