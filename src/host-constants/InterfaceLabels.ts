@@ -22,5 +22,16 @@ export const AUTH_SIGNUP = 'Регистрация';
 export const AUTH_SIGNIN = 'Вход в систему';
 export const AUTH_TO_SIGNUP = 'Зарегистрироваться';
 export const AUTH_TO_SIGNIN = 'Войти';
+export const AUTH_TO_AUTHORIZATION = 'Авторизоваться';
 export const AUTH_EMAIL = 'Почта';
 export const AUTH_PASSWORD = 'Пароль';
+export const AUTH_REPASSWORD = 'Повторите пароль';
+export const AUTH_REPASSWORD_NOT_MATCH = 'Повторный пароль не совпадает';
+
+/**
+ *  HEADER
+ */
+export const HEADER_LOGO_TEXT = 'ТВОЙ РИНГ';
+export const HEADER_GYM_PROJECT_TYPE = 'Арена';
+export const HEADER_SHOP_PROJECT_TYPE = 'Питание';
+export const HEADER_SETTINGS_EXIT = 'Выйти';

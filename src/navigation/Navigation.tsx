@@ -7,6 +7,7 @@ import GymFrontend from 'GymFrontend/GymFrontend';
 
 import { AuthPage } from '@/pages/login/AuthPage';
 
+import { Header } from '@/header/Header';
 import { hostTheme } from '@/styles/hostTheme';
 
 interface ExtendedWindow extends Window {
@@ -28,7 +29,7 @@ const Navigation = () => {
           path="gym/*"
           element={
             <>
-              <h1>HEDER</h1>
+              <Header />
               <GymFrontend />
             </>
           }
