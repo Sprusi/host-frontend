@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &Logo {
+    &Text {
+      font-size: 1.5em;
+    }
+    &Tag {
+      font-size: 1.1em;
+      margin-bottom: 1.3em;
+    }
+  }
+  &Settings {
+    font-size: 1.3em;
+  }
+}

@@ -1,13 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, Card, Col, Flex, Form, Input, Row, Typography } from 'antd';
+import Link from 'antd/es/typography/Link';
 
 import { getRequiredRule } from './utils';
 import { InterfaceLabels } from '@/host-constants';
 
 import styles from './AuthPage.module.scss';
 import { localStorageAuth } from './localStorageAuth';
+import { TokenResponse } from './type/TokenResponse';
 import { DEFAULT_ROUTER_PATH } from '@/navigation/Navigation';
 import { AuthService } from '@/services/AuthService';
 import { MessageService } from '@/services/MessageService';
@@ -15,7 +17,7 @@ import { MessageService } from '@/services/MessageService';
 const { Item } = Form;
 
 export interface AuthForm {
-  login: string;
+  email: string;
   password: string;
 }
 export interface RegisterForm extends AuthForm {
@@ -23,11 +25,13 @@ export interface RegisterForm extends AuthForm {
 }
 
 export const AuthPage = () => {
+  const [form] = Form.useForm<RegisterForm>();
   const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { token, payload } = localStorageAuth.getCurrentToken() || {};
+
   const isAuthenticated = useMemo(() => {
     if (!token?.accessToken || !payload?.roles) return false;
     return (payload?.exp || 0) * 1000 > Date.now() + 2000;
@@ -37,38 +41,83 @@ export const AuthPage = () => {
     if (isAuthenticated) navigate(DEFAULT_ROUTER_PATH);
   }, [isAuthenticated, navigate]);
 
+  const showError = useCallback((e: any) => {
+    const msg =
+      e?.response?.data?.message ||
+      e?.response?.data?.join?.('\n') ||
+      e?.message ||
+      e?.message?.join?.('\n') ||
+      String(e);
+    MessageService.warn(msg);
+  }, []);
+
+  const saveTokenAndNavigate = useCallback(
+    (data: TokenResponse) => {
+      const token = localStorageAuth.setCurrentToken(data);
+      if (!token?.payload) return MessageService.error('Failed to get auth token payload');
+      MessageService.success();
+      const path = localStorageAuth.popRequestedPath();
+      setTimeout(() => navigate(path || DEFAULT_ROUTER_PATH, { replace: false }), 800);
+    },
+    [navigate]
+  );
+
   const handleLogin = (value: AuthForm) => {
     setLoading(true);
     AuthService.login(value)
-      .then(({ data }) => {
-        const token = localStorageAuth.setCurrentToken(data);
-        if (!token?.payload) return MessageService.error('Failed to get auth token payload');
-        MessageService.success();
-        const requestedPath = localStorageAuth.popRequestedPath();
-        setTimeout(() => navigate(requestedPath || DEFAULT_ROUTER_PATH, { replace: false }), 800);
+      .then(({ data }) => saveTokenAndNavigate(data))
+      .catch((e) => {
+        showError(e);
+        form.resetFields(['password']);
       })
-      .catch((e) => MessageService.error(e?.message || e, e))
       .finally(() => setLoading(false));
   };
 
   const handleRegister = (value: RegisterForm) => {
-    if (!value) return;
-    setIsRegister(false);
+    if (value.password !== value.repeatPassword) return MessageService.warn(InterfaceLabels.AUTH_REPASSWORD_NOT_MATCH);
+    setLoading(true);
+    AuthService.registration({ email: value.email, password: value.password })
+      .then(({ data }) => saveTokenAndNavigate(data))
+      .catch((e) => {
+        showError(e);
+        form.resetFields(['password', 'repeatPassword']);
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleFinish = (values: AuthForm | RegisterForm) => {
     isRegister ? handleRegister(values as RegisterForm) : handleLogin(values as AuthForm);
   };
 
+  const getSwitchAuthTypeButton = useCallback(
+    (type: 'SINGIN' | 'SINGUP') => {
+      const shouldRender = (type === 'SINGIN' && isRegister) || (type === 'SINGUP' && !isRegister);
+      if (!shouldRender) return null;
+      const label = type === 'SINGIN' ? InterfaceLabels.AUTH_TO_AUTHORIZATION : InterfaceLabels.AUTH_TO_SIGNUP;
+      return (
+        <Link
+          className={styles.cardFormSwitchAuthTypeButton}
+          onClick={() => {
+            setIsRegister((prev) => !prev);
+            form.resetFields(['password', 'repeatPassword']);
+          }}
+        >
+          {label}
+        </Link>
+      );
+    },
+    [isRegister]
+  );
+
   return (
     <Row justify={'center'} align={'middle'} className={styles.wrapper}>
-      <Col xs={20} sm={12} md={10} lg={8} xl={7}>
+      <Col xs={20} sm={15} md={11} lg={9} xl={7}>
         <Row justify={'center'}>
-          <Typography.Title level={1}>
+          <Typography.Title level={1} className={styles.cardTitle}>
             {isRegister ? InterfaceLabels.AUTH_SIGNUP : InterfaceLabels.AUTH_SIGNIN}
           </Typography.Title>
           <Card className={styles.card}>
-            <Form layout="vertical" labelWrap onFinish={handleFinish}>
+            <Form layout="vertical" labelWrap onFinish={handleFinish} form={form}>
               <Item
                 label={InterfaceLabels.AUTH_EMAIL}
                 name={'email'}
@@ -82,22 +131,23 @@ export const AuthPage = () => {
                 name={'password'}
                 rules={[getRequiredRule()]}
                 className={styles.cardFormItem}
+                extra={getSwitchAuthTypeButton('SINGUP')}
               >
                 <Input type={'password'} />
               </Item>
               {isRegister && (
-                <Item name={'repeatPassword'} rules={[getRequiredRule()]} className={styles.cardFormItem}>
+                <Item
+                  label={InterfaceLabels.AUTH_REPASSWORD}
+                  name={'repeatPassword'}
+                  rules={[getRequiredRule()]}
+                  className={styles.cardFormItem}
+                  extra={getSwitchAuthTypeButton('SINGIN')}
+                >
                   <Input type={'password'} />
                 </Item>
               )}
               <Flex justify="center">
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  loading={loading}
-                  disabled={isRegister}
-                  className={styles.cardFormButton}
-                >
+                <Button type="primary" htmlType="submit" loading={loading} className={styles.cardFormButton}>
                   {isRegister ? InterfaceLabels.AUTH_TO_SIGNUP : InterfaceLabels.AUTH_TO_SIGNIN}
                 </Button>
               </Flex>

@@ -6,4 +6,9 @@ export const hostTheme: ThemeConfig = {
     fontSize: 18,
     colorPrimary: '#606060d9',
   },
+  components: {
+    Layout: {
+      headerBg: '#000',
+    },
+  },
 };

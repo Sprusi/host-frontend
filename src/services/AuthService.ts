@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-import { AuthForm, RegisterForm } from '@/pages/login/AuthPage';
+import { AuthForm } from '@/pages/login/AuthPage';
 import { localStorageAuth } from '@/pages/login/localStorageAuth';
 import { TokenResponse } from '@/pages/login/type/TokenResponse';
 
@@ -17,7 +17,7 @@ const login = (data: AuthForm): Promise<AxiosResponse<TokenResponse>> => {
   return authInstance.post<TokenResponse>('/auth/login', data);
 };
 
-const registration = (data: RegisterForm): Promise<AxiosResponse<TokenResponse>> => {
+const registration = (data: AuthForm): Promise<AxiosResponse<TokenResponse>> => {
   return authInstance.post<TokenResponse>('/auth/regestration', data);
 };
 

@@ -4,6 +4,9 @@
 
 .card {
   width: 100%;
+  &Title {
+    margin-bottom: 14% !important;
+  }
   &Form {
     &Item {
       font-weight: bold;
@@ -15,6 +18,9 @@
       width: 100%;
       height: 2em;
       margin-top: 10px;
+    }
+    &SwitchAuthTypeButton {
+      font-size: 0.7em;
     }
   }
 }
