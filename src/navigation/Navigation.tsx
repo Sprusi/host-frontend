@@ -1,12 +1,12 @@
 import React, { Suspense, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
+import { FullScreenLoader } from '@/components/fullscreen-loader/FullScreenLoader';
 import { Header } from '@/components/header/Header';
 import { AuthPage } from '@/components/login/AuthPage';
 
 import GymFrontend from '../microfrontends/GymFrontend';
 
-import { FullScreenLoader } from '@/fullscreen-loader/FullScreenLoader';
 import ShopFrontend from '@/microfrontends/ShopFrontend';
 
 interface ExtendedWindow extends Window {

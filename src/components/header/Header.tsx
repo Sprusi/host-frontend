@@ -26,7 +26,7 @@ export const Header = () => {
       ({
         gym: { text: InterfaceLabels.HEADER_GYM_PROJECT_TYPE, color: 'orange' },
         shop: { text: InterfaceLabels.HEADER_SHOP_PROJECT_TYPE, color: 'green' },
-      }[location.pathname.split('/')[0] || 'gym']),
+      }[location.pathname.split('/')[1] || 'gym']),
     [location.pathname]
   );
 
