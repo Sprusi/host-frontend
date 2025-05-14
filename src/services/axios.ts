@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
-import { localStorageAuth } from '@/pages/login/localStorageAuth';
+import { localStorageAuth } from '@/components/login/localStorageAuth';
 
 import { InterfaceLabels } from '@/host-constants';
 

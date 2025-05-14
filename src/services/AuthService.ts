@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-import { AuthForm } from '@/pages/login/AuthPage';
-import { localStorageAuth } from '@/pages/login/localStorageAuth';
-import { TokenResponse } from '@/pages/login/type/TokenResponse';
+import { AuthForm } from '@/components/login/AuthPage';
+import { localStorageAuth } from '@/components/login/localStorageAuth';
+import { TokenResponse } from '@/components/login/type/TokenResponse';
 
 import { InterfaceLabels } from '@/host-constants';
 

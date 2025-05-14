@@ -1,8 +1,8 @@
-import { Token } from '@/pages/login/type/Token';
-import { TokenPayload } from '@/pages/login/type/TokenPayload';
-import { TokenResponse } from '@/pages/login/type/TokenResponse';
-import { parseJwt } from '@/pages/login/utils';
+import { parseJwt } from './utils';
 
+import { Token } from './type/Token';
+import { TokenPayload } from './type/TokenPayload';
+import { TokenResponse } from './type/TokenResponse';
 import { MessageService } from '@/services/MessageService';
 
 const PREFIX = window.location.origin;

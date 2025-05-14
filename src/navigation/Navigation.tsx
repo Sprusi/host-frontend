@@ -5,9 +5,9 @@ import { ConfigProvider } from 'antd';
 //@ts-ignore
 import GymFrontend from 'GymFrontend/GymFrontend';
 
-import { AuthPage } from '@/pages/login/AuthPage';
+import { Header } from '@/components/header/Header';
+import { AuthPage } from '@/components/login/AuthPage';
 
-import { Header } from '@/header/Header';
 import { hostTheme } from '@/styles/hostTheme';
 
 interface ExtendedWindow extends Window {
