@@ -3,6 +3,7 @@
 export const SUCCESS = 'Выполнено успешно';
 export const ERR_DEFAULT = 'Произошла ошибка';
 export const REQUIRED_FIELD = 'Поле обязательно для заполнения';
+export const BACK = 'Назад';
 
 /**
  *  AXIOS
@@ -14,6 +15,9 @@ export const SERVER_REQUEST_ERROR = 'Ошибка в запросе к серв�
 export const REQUEST_ERROR = 'Ошибка в запросе';
 export const PAGE_NOT_FOUND = 'Страница или документ не найдена';
 export const INACTIVE_SESSION = 'Сессия истекла или неактивна';
+export const INTERNAL_SERVER_ERROR = 'Ошибка на стороне сервера';
+export const ERROR = (key: string) => 'Ошибка ' + key;
+export const SOMETHING_WENT_WRONG = 'Что-то пошло не так ...';
 
 /**
  *  AUTH

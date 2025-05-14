@@ -33,6 +33,7 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
       name: 'FompCommon',
       remotes: {
         GymFrontend: 'GymFrontend@http://localhost:3001/remoteEntry.js',
+        ShopFrontend: 'ShopFrontend@http://localhost:3002/remoteEntry.js',
       },
       shared: {
         react: {
