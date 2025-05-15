@@ -1,4 +1,3 @@
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import dotenv from 'dotenv';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpack, { Configuration, container } from 'webpack';
@@ -13,9 +12,8 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 const { ModuleFederationPlugin } = container;
 
 export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
-  const { mode, paths, hot, analyzer } = options;
+  const { mode, paths, analyzer } = options;
   const isProd = mode === 'production';
-  const isDev = mode === 'development';
 
   const env = dotenv.config().parsed || {};
   const envKeys = Object.keys(env).reduce((prev, next) => {
@@ -60,10 +58,6 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
         ignoreOrder: true,
       })
     );
-  }
-
-  if (isDev) {
-    hot && plugins.push(new ReactRefreshWebpackPlugin());
   }
 
   if (analyzer) {
