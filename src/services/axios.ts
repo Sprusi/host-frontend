@@ -40,18 +40,18 @@ const handleError = async (error: AxiosError) => {
           return instance(config as AxiosRequestConfig);
         } catch (refreshError) {
           MessageService.error(InterfaceLabels.INACTIVE_SESSION, refreshError as Error);
-          setTimeout(() => AuthService.logout(), 500);
+          setTimeout(() => localStorageAuth.clearAllAuthData(), 500);
         }
       } else {
         MessageService.error(InterfaceLabels.INACTIVE_SESSION, error);
-        setTimeout(() => AuthService.logout(), 500);
+        setTimeout(() => localStorageAuth.clearAllAuthData(), 500);
       }
       break;
     case 403:
       MessageService.error(InterfaceLabels.ACCESS_DENIED, error);
       // TODO: Навигейт на 403 экран
       // window.location.replace(errorPath(error.response.status));
-      window.location.replace('/gym');
+      window.location.replace('/');
       break;
     case 404:
       MessageService.error(InterfaceLabels.PAGE_NOT_FOUND, error);

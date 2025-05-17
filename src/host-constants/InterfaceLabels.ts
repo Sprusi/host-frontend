@@ -24,6 +24,7 @@ export const SOMETHING_WENT_WRONG = 'Что-то пошло не так ...';
  */
 export const AUTH_SIGNUP = 'Регистрация';
 export const AUTH_SIGNIN = 'Вход в систему';
+export const AUTH_AUTH = 'Авторизация';
 export const AUTH_TO_SIGNUP = 'Зарегистрироваться';
 export const AUTH_TO_SIGNIN = 'Войти';
 export const AUTH_TO_AUTHORIZATION = 'Авторизоваться';

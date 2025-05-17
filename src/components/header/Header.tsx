@@ -1,37 +1,21 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { SettingOutlined } from '@ant-design/icons';
-import { Dropdown, Layout, Menu, MenuProps, Space, Tag, Typography } from 'antd';
-import { MenuInfo } from 'rc-menu/lib/interface';
+import { Dropdown, Layout, Menu, Space, Tag, Typography } from 'antd';
 
 import { InterfaceLabels } from '@/host-constants';
 
 import styles from './Header.module.scss';
-import { AuthService } from '@/services/AuthService';
+import { useMenu } from './useMenu';
+import { useSettingItem } from './useSettingItem';
 
 const { Header: AntdHeader } = Layout;
 
 export const Header = () => {
-  const [activeMenuKey, setActiveMenuKey] = useState(location.pathname.split('/')[1] || 'gym');
+  const [loading, setLoading] = useState(false);
 
-  const onMenuClick = useCallback((e: MenuInfo) => {
-    setActiveMenuKey(e.key);
-    window.location.assign(`/${e.key}`);
-  }, []);
-
-  const menuItems = useMemo(
-    () => [
-      {
-        key: 'gym',
-        label: InterfaceLabels.HEADER_GYM_PROJECT_TYPE,
-      },
-      {
-        key: 'shop',
-        label: InterfaceLabels.HEADER_SHOP_PROJECT_TYPE,
-      },
-    ],
-    []
-  );
+  const { menuItems, activeMenuKey, onMenuClick } = useMenu();
+  const { settingsItems } = useSettingItem(setLoading);
 
   const projectCardTypes = useMemo(
     () =>
@@ -40,17 +24,6 @@ export const Header = () => {
         shop: { text: InterfaceLabels.HEADER_SHOP_PROJECT_TYPE, color: 'green' },
       }[activeMenuKey]),
     [activeMenuKey]
-  );
-
-  const settingsItems: MenuProps['items'] = useMemo(
-    () => [
-      {
-        key: 'exit',
-        danger: true,
-        label: <span onClick={() => AuthService.logout()}>{InterfaceLabels.HEADER_SETTINGS_EXIT}</span>,
-      },
-    ],
-    []
   );
 
   return (
@@ -74,7 +47,7 @@ export const Header = () => {
         className={styles.headerMenu}
       />
       <Dropdown menu={{ items: settingsItems }} trigger={['click']}>
-        <SettingOutlined className={styles.headerSettings} />
+        <SettingOutlined className={styles.headerSettings} spin={loading} />
       </Dropdown>
     </AntdHeader>
   );

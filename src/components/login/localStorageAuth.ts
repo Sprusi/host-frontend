@@ -41,6 +41,7 @@ const popRequestedPath = (): string | undefined => {
 const clearAllAuthData = () => {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(PATH_KEY);
+  window.location.replace('/login');
 };
 
 export const localStorageAuth = {

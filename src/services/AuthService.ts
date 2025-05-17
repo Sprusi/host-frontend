@@ -1,12 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { AuthForm } from '@/components/login/AuthPage';
-import { localStorageAuth } from '@/components/login/localStorageAuth';
 import { TokenResponse } from '@/components/login/type/TokenResponse';
 
 import { InterfaceLabels } from '@/host-constants';
 
-import { getBaseUrl } from './axios';
+import instance, { getBaseUrl } from './axios';
 import { MessageService } from './MessageService';
 
 const authInstance = axios.create({
@@ -22,12 +21,11 @@ const registration = (data: AuthForm): Promise<AxiosResponse<TokenResponse>> => 
 };
 
 const refreshToken = (refreshToken: string | undefined): Promise<AxiosResponse<TokenResponse>> => {
-  return authInstance.post<TokenResponse>('auth/refresh', { refreshToken });
+  return authInstance.post<TokenResponse>('/auth/refresh', { refreshToken });
 };
 
-const logout = () => {
-  localStorageAuth.clearAllAuthData();
-  window.location.replace('/login');
+const logout = (): Promise<AxiosResponse<void>> => {
+  return instance.post<void>('/auth/logout');
 };
 
 authInstance.interceptors.response.use(

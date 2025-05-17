@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, Card, Col, Flex, Form, Input, Row, Typography } from 'antd';
@@ -10,6 +10,7 @@ import { InterfaceLabels } from '@/host-constants';
 import styles from './AuthPage.module.scss';
 import { localStorageAuth } from './localStorageAuth';
 import { TokenResponse } from './type/TokenResponse';
+import { useToken } from '@/hook/useToken';
 import { DEFAULT_ROUTER_PATH } from '@/navigation/Navigation';
 import { AuthService } from '@/services/AuthService';
 import { MessageService } from '@/services/MessageService';
@@ -27,15 +28,10 @@ export interface RegisterForm extends AuthForm {
 export const AuthPage = () => {
   const [form] = Form.useForm<RegisterForm>();
   const navigate = useNavigate();
+  const { isAuthenticated } = useToken();
+
   const [isRegister, setIsRegister] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const { token, payload } = localStorageAuth.getCurrentToken() || {};
-
-  const isAuthenticated = useMemo(() => {
-    if (!token?.accessToken || !payload?.roles) return false;
-    return (payload?.exp || 0) * 1000 > Date.now() + 2000;
-  }, [token, payload]);
 
   useEffect(() => {
     if (isAuthenticated) navigate(DEFAULT_ROUTER_PATH);
