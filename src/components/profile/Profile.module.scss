@@ -2,3 +2,9 @@
   width: 90%;
   margin: 1% auto;
 }
+
+.modal {
+  &LeftCol {
+    min-width: 400px;
+  }
+}

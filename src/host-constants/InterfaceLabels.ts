@@ -4,6 +4,7 @@ export const SUCCESS = 'Выполнено успешно';
 export const ERR_DEFAULT = 'Произошла ошибка';
 export const REQUIRED_FIELD = 'Поле обязательно для заполнения';
 export const BACK = 'Назад';
+export const VALIDATION_ERROR = 'Не все обязательные поля были заполнены';
 
 /**
  *  AXIOS
@@ -51,3 +52,17 @@ export const PERSON_SEX = 'Пол';
 export const PERSON_AGE = 'Возрост';
 export const PERSON_HEIGHT = 'Рост';
 export const PERSON_WEIGHT = 'Вес';
+
+export const PERSON_MODAL_EDIT_TITLE = 'Редактирование';
+export const PERSON_MODAL_EDIT_FIELD = {
+  firstName: 'Фамилия',
+  middleName: 'Имя',
+  lastName: 'Отчество',
+  sex: 'Пол',
+  age: 'Возрост',
+  height: 'Рост',
+  weight: 'Вес',
+};
+export const PERSON_RECOMMEND_CALCULATION_POP_UP = 'Необходимо для расчета рекомендаций';
+export const PERSON_ID_ERROR = 'Не найден ID пользователя';
+export const PERSON_PROFILE_EDIT = 'Редактировать';

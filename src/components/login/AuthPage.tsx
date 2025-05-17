@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Card, Col, Flex, Form, Input, Row, Typography } from 'antd';
 import Link from 'antd/es/typography/Link';
 
-import { getRequiredRule } from './utils';
 import { InterfaceLabels } from '@/host-constants';
+import { getRequiredRule } from '@/utils/formUtils';
 
 import styles from './AuthPage.module.scss';
 import { localStorageAuth } from './localStorageAuth';

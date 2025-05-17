@@ -8,13 +8,15 @@ import { InterfaceLabels } from '@/host-constants';
 import styles from './Header.module.scss';
 import { useMenu } from './useMenu';
 import { useSettingItem } from './useSettingItem';
+import { useToken } from '@/hook/useToken';
 
 const { Header: AntdHeader } = Layout;
 
 export const Header = () => {
   const [loading, setLoading] = useState(false);
 
-  const { menuItems, activeMenuKey, onMenuClick } = useMenu();
+  const { isAuthenticated } = useToken();
+  const { menuItems, activeMenuKey, onMenuClick } = useMenu(isAuthenticated);
   const { settingsItems } = useSettingItem(setLoading);
 
   const projectCardTypes = useMemo(

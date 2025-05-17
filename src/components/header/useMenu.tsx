@@ -8,7 +8,7 @@ import { InterfaceLabels } from '@/host-constants';
 
 import styles from './Header.module.scss';
 
-export const useMenu = () => {
+export const useMenu = (isAuthenticated: boolean) => {
   const navigate = useNavigate();
   const [activeMenuKey, setActiveMenuKey] = useState(location.pathname.split('/')[1] || 'gym');
 
@@ -22,12 +22,11 @@ export const useMenu = () => {
         key: 'shop',
         label: InterfaceLabels.HEADER_SHOP_PROJECT_TYPE,
       },
-      {
-        key: 'profile',
-        icon: <IdcardOutlined className={`${styles.headerIcon} ${styles.headerIconProfile}`} />,
-      },
+      ...(isAuthenticated
+        ? [{ key: 'profile', icon: <IdcardOutlined className={`${styles.headerIcon} ${styles.headerIconProfile}`} /> }]
+        : []),
     ],
-    []
+    [isAuthenticated]
   );
 
   const onMenuClick = useCallback((e: MenuInfo) => {
