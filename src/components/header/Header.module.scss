@@ -14,4 +14,10 @@
   &Settings {
     font-size: 1.3em;
   }
+  &Menu {
+    flex: 1;
+    min-width: 0;
+    justify-content: end;
+    margin: 0 15px;
+  }
 }

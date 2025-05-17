@@ -10,5 +10,8 @@ export const hostTheme: ThemeConfig = {
     Layout: {
       headerBg: '#000',
     },
+    Menu: {
+      darkItemBg: '#000',
+    },
   },
 };

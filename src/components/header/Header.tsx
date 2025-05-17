@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { SettingOutlined } from '@ant-design/icons';
-import { Dropdown, Layout, MenuProps, Space, Tag, Typography } from 'antd';
+import { Dropdown, Layout, Menu, MenuProps, Space, Tag, Typography } from 'antd';
+import { MenuInfo } from 'rc-menu/lib/interface';
 
 import { InterfaceLabels } from '@/host-constants';
 
@@ -10,12 +11,22 @@ import styles from './Header.module.scss';
 const { Header: AntdHeader } = Layout;
 
 export const Header = () => {
-  const settingsItems: MenuProps['items'] = useMemo(
+  const [activeMenuKey, setActiveMenuKey] = useState(location.pathname.split('/')[1] || 'gym');
+
+  const onMenuClick = useCallback((e: MenuInfo) => {
+    setActiveMenuKey(e.key);
+    window.location.assign(`/${e.key}`);
+  }, []);
+
+  const menuItems = useMemo(
     () => [
       {
-        key: 'exit',
-        danger: true,
-        label: InterfaceLabels.HEADER_SETTINGS_EXIT,
+        key: 'gym',
+        label: InterfaceLabels.HEADER_GYM_PROJECT_TYPE,
+      },
+      {
+        key: 'shop',
+        label: InterfaceLabels.HEADER_SHOP_PROJECT_TYPE,
       },
     ],
     []
@@ -26,8 +37,19 @@ export const Header = () => {
       ({
         gym: { text: InterfaceLabels.HEADER_GYM_PROJECT_TYPE, color: 'orange' },
         shop: { text: InterfaceLabels.HEADER_SHOP_PROJECT_TYPE, color: 'green' },
-      }[location.pathname.split('/')[1] || 'gym']),
-    [location.pathname]
+      }[activeMenuKey]),
+    [activeMenuKey]
+  );
+
+  const settingsItems: MenuProps['items'] = useMemo(
+    () => [
+      {
+        key: 'exit',
+        danger: true,
+        label: InterfaceLabels.HEADER_SETTINGS_EXIT,
+      },
+    ],
+    []
   );
 
   return (
@@ -42,6 +64,14 @@ export const Header = () => {
           </Tag>
         )}
       </Space>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        items={menuItems}
+        onClick={onMenuClick}
+        selectedKeys={activeMenuKey ? [activeMenuKey] : []}
+        className={styles.headerMenu}
+      />
       <Dropdown menu={{ items: settingsItems }} trigger={['click']}>
         <SettingOutlined className={styles.headerSettings} />
       </Dropdown>
