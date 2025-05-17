@@ -40,3 +40,14 @@ export const HEADER_LOGO_TEXT = 'ТВОЙ РИНГ';
 export const HEADER_GYM_PROJECT_TYPE = 'Арена';
 export const HEADER_SHOP_PROJECT_TYPE = 'Питание';
 export const HEADER_SETTINGS_EXIT = 'Выйти';
+
+/**
+ *  PROFILE
+ */
+export const PERSON_MALE = 'Мужчина';
+export const PERSON_FEMALE = 'Женщина';
+export const PERSON_PHONE = 'Телефон';
+export const PERSON_SEX = 'Пол';
+export const PERSON_AGE = 'Возрост';
+export const PERSON_HEIGHT = 'Рост';
+export const PERSON_WEIGHT = 'Вес';

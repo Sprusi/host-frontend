@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { FullScreenLoader } from '@/components/fullscreen-loader/FullScreenLoader';
 import { Header } from '@/components/header/Header';
 import { AuthPage } from '@/components/login/AuthPage';
+import { Profile } from '@/components/profile/Profile';
 
 import GymFrontend from '../microfrontends/GymFrontend';
 
@@ -13,7 +14,7 @@ interface ExtendedWindow extends Window {
   IS_MICROFRONTEND?: boolean;
 }
 
-export const DEFAULT_ROUTER_PATH = '/gym';
+export const DEFAULT_ROUTER_PATH = process.env.REACT_APP_DEFAULT_ROUTE_PATH || '/gym';
 
 const Navigation = () => {
   useEffect(() => {
@@ -23,6 +24,15 @@ const Navigation = () => {
   return (
     <Routes>
       <Route path="/login" element={<AuthPage />} />
+      <Route
+        path="/profile"
+        element={
+          <>
+            <Header />
+            <Profile />
+          </>
+        }
+      />
       <Route
         path="gym/*"
         element={

@@ -11,13 +11,16 @@
       margin-bottom: 1.3em;
     }
   }
-  &Settings {
-    font-size: 1.3em;
+  &Icon {
+    font-size: 1.3em !important;
+    &Profile {
+      margin-top: 22px;
+    }
   }
   &Menu {
     flex: 1;
     min-width: 0;
     justify-content: end;
-    margin: 0 15px;
+    margin: 0 18px;
   }
 }

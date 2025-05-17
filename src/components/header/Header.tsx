@@ -47,7 +47,7 @@ export const Header = () => {
         className={styles.headerMenu}
       />
       <Dropdown menu={{ items: settingsItems }} trigger={['click']}>
-        <SettingOutlined className={styles.headerSettings} spin={loading} />
+        <SettingOutlined className={styles.headerIcon} spin={loading} />
       </Dropdown>
     </AntdHeader>
   );
