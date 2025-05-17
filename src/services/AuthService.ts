@@ -26,7 +26,7 @@ const refreshToken = (refreshToken: string | undefined): Promise<AxiosResponse<T
 };
 
 const logout = () => {
-  localStorageAuth.clearToken();
+  localStorageAuth.clearAllAuthData();
   window.location.replace('/login');
 };
 

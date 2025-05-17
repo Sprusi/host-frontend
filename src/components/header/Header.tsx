@@ -7,6 +7,7 @@ import { MenuInfo } from 'rc-menu/lib/interface';
 import { InterfaceLabels } from '@/host-constants';
 
 import styles from './Header.module.scss';
+import { AuthService } from '@/services/AuthService';
 
 const { Header: AntdHeader } = Layout;
 
@@ -46,7 +47,7 @@ export const Header = () => {
       {
         key: 'exit',
         danger: true,
-        label: InterfaceLabels.HEADER_SETTINGS_EXIT,
+        label: <span onClick={() => AuthService.logout()}>{InterfaceLabels.HEADER_SETTINGS_EXIT}</span>,
       },
     ],
     []

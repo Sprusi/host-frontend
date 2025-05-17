@@ -38,10 +38,7 @@ const popRequestedPath = (): string | undefined => {
   return undefined;
 };
 
-const clearToken = () => localStorage.removeItem(TOKEN_KEY);
-
 const clearAllAuthData = () => {
-  localStorage.removeItem('defaultPath');
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(PATH_KEY);
 };
@@ -51,6 +48,5 @@ export const localStorageAuth = {
   setCurrentToken,
   pushRequestedPath,
   popRequestedPath,
-  clearToken,
   clearAllAuthData,
 };
