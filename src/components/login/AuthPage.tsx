@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { Button, Card, Col, Flex, Form, Input, Row, Typography } from 'antd';
 import Link from 'antd/es/typography/Link';
@@ -27,15 +26,14 @@ export interface RegisterForm extends AuthForm {
 
 export const AuthPage = () => {
   const [form] = Form.useForm<RegisterForm>();
-  const navigate = useNavigate();
   const { isAuthenticated } = useToken();
 
   const [isRegister, setIsRegister] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) navigate(DEFAULT_ROUTER_PATH);
-  }, [isAuthenticated, navigate]);
+    if (isAuthenticated) window.location.assign(DEFAULT_ROUTER_PATH);
+  }, [isAuthenticated]);
 
   const showError = useCallback((e: any) => {
     const msg =
@@ -47,16 +45,13 @@ export const AuthPage = () => {
     MessageService.warn(msg);
   }, []);
 
-  const saveTokenAndNavigate = useCallback(
-    (data: TokenResponse) => {
-      const token = localStorageAuth.setCurrentToken(data);
-      if (!token?.payload) return MessageService.error('Failed to get auth token payload');
-      MessageService.success();
-      const path = localStorageAuth.popRequestedPath();
-      setTimeout(() => navigate(path || DEFAULT_ROUTER_PATH, { replace: false }), 800);
-    },
-    [navigate]
-  );
+  const saveTokenAndNavigate = useCallback((data: TokenResponse) => {
+    const token = localStorageAuth.setCurrentToken(data);
+    if (!token?.payload) return MessageService.error('Failed to get auth token payload');
+    MessageService.success();
+    const path = localStorageAuth.popRequestedPath();
+    setTimeout(() => window.location.assign(path || DEFAULT_ROUTER_PATH), 800);
+  }, []);
 
   const handleLogin = (value: AuthForm) => {
     setLoading(true);
