@@ -1,0 +1,10 @@
+.wrapper {
+  width: 90%;
+  margin: 3% auto;
+}
+
+.modal {
+  &LeftCol {
+    min-width: 400px;
+  }
+}

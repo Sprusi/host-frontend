@@ -4,13 +4,13 @@ import { Button, Card, Col, Flex, Form, Input, Row, Typography } from 'antd';
 import Link from 'antd/es/typography/Link';
 
 import { InterfaceLabels } from '@/host-constants';
-import { getRequiredRule } from '@/utils/formUtils';
+import { getRequiredRule, showError } from '@/utils/FormUtils';
+import { getDefaultPath } from '@/utils/SecurityUtils';
 
 import styles from './AuthPage.module.scss';
 import { localStorageAuth } from './localStorageAuth';
 import { TokenResponse } from './type/TokenResponse';
 import { useToken } from '@/hook/useToken';
-import { DEFAULT_ROUTER_PATH } from '@/navigation/Navigation';
 import { AuthService } from '@/services/AuthService';
 import { MessageService } from '@/services/MessageService';
 
@@ -32,25 +32,15 @@ export const AuthPage = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) window.location.assign(DEFAULT_ROUTER_PATH);
+    if (isAuthenticated) window.location.assign(getDefaultPath());
   }, [isAuthenticated]);
-
-  const showError = useCallback((e: any) => {
-    const msg =
-      e?.response?.data?.message ||
-      e?.response?.data?.join?.('\n') ||
-      e?.message ||
-      e?.message?.join?.('\n') ||
-      String(e);
-    MessageService.warn(msg);
-  }, []);
 
   const saveTokenAndNavigate = useCallback((data: TokenResponse) => {
     const token = localStorageAuth.setCurrentToken(data);
     if (!token?.payload) return MessageService.error('Failed to get auth token payload');
     MessageService.success();
     const path = localStorageAuth.popRequestedPath();
-    setTimeout(() => window.location.assign(path || DEFAULT_ROUTER_PATH), 800);
+    setTimeout(() => window.location.assign(path || getDefaultPath()), 800);
   }, []);
 
   const handleLogin = (value: AuthForm) => {

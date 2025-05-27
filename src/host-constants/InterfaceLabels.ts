@@ -66,3 +66,25 @@ export const PERSON_MODAL_EDIT_FIELD = {
 export const PERSON_RECOMMEND_CALCULATION_POP_UP = 'Необходимо для расчета рекомендаций';
 export const PERSON_ID_ERROR = 'Не найден ID пользователя';
 export const PERSON_PROFILE_EDIT = 'Редактировать';
+
+/**
+ *  MANAGER PANEL
+ */
+export const MP_ADMIN_PANEL = 'Панель Администратора';
+export const MP_ALL_USERS = 'Все пользователи';
+export const MP_COLUMNS = {
+  id: 'ID',
+  fullName: 'Имя пользователя',
+  roles: 'Роль',
+};
+export const MP_MODAL_EDIT_FIELD = {
+  firstName: 'Фамилия',
+  middleName: 'Имя',
+  lastName: 'Отчество',
+  roles: 'Роли',
+  sex: 'Пол',
+  age: 'Возрост',
+  height: 'Рост',
+  weight: 'Вес',
+};
+export const MP_PERSON_ID_ERROR = 'Не найден ID пользователя';
