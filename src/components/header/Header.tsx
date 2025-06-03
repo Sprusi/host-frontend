@@ -27,7 +27,7 @@ export const Header = () => {
   );
 
   return (
-    <AntdHeader className={styles.header}>
+    <AntdHeader className={`${styles.header} header-root`}>
       <Space size="large">
         <Typography.Text strong className={styles.headerLogoText}>
           {InterfaceLabels.HEADER_LOGO_TEXT}
