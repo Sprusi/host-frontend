@@ -30,17 +30,22 @@ export const AuthPage = () => {
 
   const [isRegister, setIsRegister] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isTokenInstallation, setIsTokenInstallation] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) window.location.assign(getDefaultPath());
+    if (isAuthenticated && !isTokenInstallation) window.location.replace(getDefaultPath());
   }, [isAuthenticated]);
 
   const saveTokenAndNavigate = useCallback((data: TokenResponse) => {
+    setIsTokenInstallation(true);
     const token = localStorageAuth.setCurrentToken(data);
     if (!token?.payload) return MessageService.error('Failed to get auth token payload');
     MessageService.success();
     const path = localStorageAuth.popRequestedPath();
-    setTimeout(() => window.location.assign(path || getDefaultPath()), 800);
+    setTimeout(() => {
+      window.location.replace(path || getDefaultPath());
+      setIsTokenInstallation(false);
+    }, 500);
   }, []);
 
   const handleLogin = (value: AuthForm) => {
