@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  host:
+    build:
+      context: ./host
+    container_name: host
+    restart: unless-stopped
+    ports:
+      - '80:80'
+    depends_on:
+      - gym-frontend
+      - sport-shop-frontend
+      - backend
+
+  gym-frontend:
+    build:
+      context: ./gym-frontend
+    container_name: gym-frontend
+    restart: unless-stopped
+
+  sport-shop-frontend:
+    build:
+      context: ./sport-shop-frontend
+    container_name: sport-shop-frontend
+    restart: unless-stopped
+
+  gym-authorization-service:
+    build:
+      context: ./gym-authorization-service
+    container_name: gym-authorization-service
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
