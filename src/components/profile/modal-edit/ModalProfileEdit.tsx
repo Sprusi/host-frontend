@@ -3,7 +3,7 @@ import React, { FC, memo, useCallback, useEffect } from 'react';
 import { Col, Form, Input, InputNumber, Modal, Row, Select } from 'antd';
 
 import { InterfaceLabels } from '@/host-constants';
-import { getRequiredRule } from '@/utils/FormUtils';
+import { getRequiredRule } from '@/utils/formUtils';
 
 import styles from '../Profile.module.scss';
 import { Person } from '../type/Person';

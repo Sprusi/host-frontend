@@ -4,7 +4,7 @@ import { Button, Card, Col, Flex, Form, Input, Row, Typography } from 'antd';
 import Link from 'antd/es/typography/Link';
 
 import { InterfaceLabels } from '@/host-constants';
-import { getRequiredRule, showError } from '@/utils/FormUtils';
+import { getRequiredRule, showError } from '@/utils/formUtils';
 import { getDefaultPath } from '@/utils/SecurityUtils';
 
 import styles from './AuthPage.module.scss';

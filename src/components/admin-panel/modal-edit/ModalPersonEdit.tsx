@@ -7,7 +7,7 @@ import { Person } from '@/components/profile/type/Person';
 import { Sex } from '@/components/profile/type/SexTypes';
 
 import { InterfaceLabels } from '@/host-constants';
-import { getRequiredRule, showError } from '@/utils/FormUtils';
+import { getRequiredRule, showError } from '@/utils/formUtils';
 
 import styles from '../AdminPanel.module.scss';
 
