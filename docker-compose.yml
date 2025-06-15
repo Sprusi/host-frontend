@@ -3,7 +3,7 @@ version: '3.8'
 services:
   host:
     build:
-      context: ./host
+      context: .
     container_name: host
     restart: unless-stopped
     ports:
