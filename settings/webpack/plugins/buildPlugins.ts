@@ -34,7 +34,7 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
           ? 'GymFrontend@http://87.228.80.5/gym-frontend/remoteEntry.js'
           : 'GymFrontend@http://localhost:3001/remoteEntry.js',
         ShopFrontend: isProd
-          ? 'ShopFrontend@http://87.228.80.5/shop-frontend/remoteEntry.js'
+          ? 'ShopFrontend@http://87.228.80.5/sport-shop-frontend/remoteEntry.js'
           : 'ShopFrontend@http://localhost:3002/remoteEntry.js',
       },
       shared: {
