@@ -34,7 +34,7 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://postgres:postgres@postgres:5432/mydb
+      DATABASE_URL: postgres://myuser:mypassword@postgres:5432/mydb
 
   postgres:
     image: postgres:15
