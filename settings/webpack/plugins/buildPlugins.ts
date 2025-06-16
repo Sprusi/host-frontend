@@ -31,10 +31,10 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
       name: 'FompCommon',
       remotes: {
         GymFrontend: isProd
-          ? 'GymFrontend@http://87.228.80.5/remoteEntry.js'
+          ? 'GymFrontend@http://87.228.80.5/gym-frontend/remoteEntry.js'
           : 'GymFrontend@http://localhost:3001/remoteEntry.js',
         ShopFrontend: isProd
-          ? 'ShopFrontend@http://87.228.80.5/remoteEntry.js'
+          ? 'ShopFrontend@http://87.228.80.5/shop-frontend/remoteEntry.js'
           : 'ShopFrontend@http://localhost:3002/remoteEntry.js',
       },
       shared: {
