@@ -18,12 +18,16 @@ services:
       context: ../gym-frontend
     container_name: gym-frontend
     restart: unless-stopped
+    ports:
+      - '80'
 
   sport-shop-frontend:
     build:
       context: ../sport-shop-frontend
     container_name: sport-shop-frontend
     restart: unless-stopped
+    ports:
+      - '80'
 
   gym-authorization-service:
     build:
