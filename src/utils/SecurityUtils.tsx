@@ -16,5 +16,5 @@ export const hasAccess = (path: string): boolean => {
 };
 
 export const getDefaultPath = (): string => {
-  return process.env.REACT_APP_DEFAULT_ROUTE_PATH || '/gym';
+  return '/gym';
 };
