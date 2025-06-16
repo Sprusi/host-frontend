@@ -34,16 +34,16 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/mydb
 
   postgres:
     image: postgres:15
     container_name: postgres
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: gym
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
     volumes:
       - pgdata:/var/lib/postgresql/data
 
