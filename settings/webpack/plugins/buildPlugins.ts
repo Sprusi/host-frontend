@@ -30,8 +30,12 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
     new ModuleFederationPlugin({
       name: 'FompCommon',
       remotes: {
-        GymFrontend: 'GymFrontend@http://localhost:3001/remoteEntry.js',
-        ShopFrontend: 'ShopFrontend@http://localhost:3002/remoteEntry.js',
+        GymFrontend: isProd
+          ? 'GymFrontend@http://87.228.80.5/remoteEntry.js'
+          : 'GymFrontend@http://localhost:3001/remoteEntry.js',
+        ShopFrontend: isProd
+          ? 'ShopFrontend@http://87.228.80.5/remoteEntry.js'
+          : 'ShopFrontend@http://localhost:3002/remoteEntry.js',
       },
       shared: {
         react: {
